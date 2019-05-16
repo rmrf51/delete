@@ -191,15 +191,35 @@ int main()
     double x[5] = {1,2,3,4,5};
     double N = 5;
     std::complex<double> G[5];
+    std::complex<double> Y[5];
 
-    for(int u=0; u<N; u++){
-        for (int n = 0; n < N; n++)
+    for(int u=0; u<N; ++u){
+        for (int n = 0; n < N; ++n)
         {
             double w = -2 * 3.1415 * u * n / N;
-            std::complex<double> c(sin(w), cos(w)) ;//= std::complex(sin(w), cos(w));
-            G[u] += (c * x[n] / N);
+            std::complex<double> c(cos(w), sin(w));//= std::complex(sin(w), cos(w));
+            G[u] += (c * x[n]  / N);
+        } 
+        //G[u] = G[u] / N;
+    }
+
+    for(int n=0; n<N; ++n){
+        for (int u = 0; u < N; ++u)
+        {
+            double w = 2 * 3.1415 * u * n / N;
+            std::complex<double> c(cos(w), sin(w));//= std::complex(sin(w), cos(w));
+            Y[n] += (G[u] * c);
         } 
     }
+
+    for(int n=0; n<N; ++n){
+    std::cout << "G[n] = " << G[n]  << "Y[n] = " << Y[n]<< std::endl;
+    }
+
+    for(int n=0; n<N; ++n){
+        G[n] = Y[n];
+    }
+    
 
     //std::cout << "hello";
 
